@@ -42,7 +42,7 @@ VALUES
 SELECT * From Movies;
 
 --- EX.1: Select the columns movie_title, imdb_rating, and year_released from the table movies. ---
---- Show movies that have the word ‘Godfather’ in the title. ---
+--- Show movies that have the word â€˜Godfatherâ€™ in the title. ---
 
 SELECT MovieTitle, ImdbRating, YearReleased 
 FROM Movies 
@@ -61,7 +61,7 @@ ORDER BY YearReleased ASC;
 --- Exercise 3: Show the count of movies by year released and language. 
 --- Sort results by the release date in ascending order.
 
-SELECT YearReleased, Language, COUNT(*)
+SELECT YearReleased, Language, COUNT(*) AS MovieCounts
 From Movies
 Group By YearReleased, Language
 Order BY YearReleased ASC;
