@@ -42,7 +42,7 @@ VALUES
 SELECT * From Movies;
 
 --- EX.1: Select the columns movie_title, imdb_rating, and year_released from the table movies. ---
---- Show movies that have the word ‘Godfather’ in the title. ---
+--- Show movies that have the word â€˜Godfatherâ€™ in the title. ---
 
 SELECT MovieTitle, ImdbRating, YearReleased 
 FROM Movies 
@@ -89,4 +89,53 @@ JOIN DistributionCompanies DC ON M.DistributionCompanyID= DC.Id;
 SELECT MovieTitle, 
     LEN(Language) - LEN(REPLACE(Language, ',', '')) + 1 AS LanguageCount
 FROM Movies;
+
+--- Split() Function ---
+
+SELECT MovieTitle, COUNT(*) AS LanguageCount
+FROM Movies
+CROSS APPLY 
+STRING_SPLIT(Language, ',')
+GROUP BY MovieTitle;
+
+----------------------------------------------------------------------------------
+
+--- Create a new table named Authors . 
+--- insert into it some random names and make a many to many relation between authors and movies 
+
+Create Table Authors (
+Id INT PRIMARY KEY IDENTITY NOT NULL,
+AuthorName VARCHAR(255) NOT NULL);
+
+
+INSERT INTO Authors (AuthorName) 
+VALUES ('Stephen King'),('J.K. Rowling'),
+  ('George R.R. Martin'),('Harper Lee'),
+  ('Agatha Christie'),('William Shakespeare'),
+  ('F. Scott Fitzgerald'),('Jane Austen'),
+  ('Ernest Hemingway'),('Margaret Atwood');
+
+  SELECT * FROM Authors;
+
+  CREATE TABLE AuthorMovie (
+  AuthorId INT FOREIGN KEY REFERENCES Authors(Id) NOT NULL,
+  MovieId INT FOREIGN KEY REFERENCES Movies(Id) NOT NULL,
+  PRIMARY KEY (AuthorId, MovieId)
+);
+
+  SELECT * FROM AuthorMovie;
+
+
+INSERT INTO AuthorMovie (MovieId, AuthorId)
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 1),
+    (5, 4),
+    (6, 5),
+    (7, 5),
+    (8, 2),
+    (9, 3),
+    (10, 4);
 
